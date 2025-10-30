@@ -1,0 +1,22 @@
+{
+  "name": "froneus-microfrontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:root": "cd root-config && npm start",
+    "start:home": "cd home-mfe && npm start",
+    "start:campaigns": "cd campaigns-mfe && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorgerepossi/froneus-microfrontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorgerepossi/froneus-microfrontend/issues"
+  },
+  "homepage": "https://github.com/jorgerepossi/froneus-microfrontend#readme",
+  "description": "Sistema de gestión de campañas con microfrontends"
+}

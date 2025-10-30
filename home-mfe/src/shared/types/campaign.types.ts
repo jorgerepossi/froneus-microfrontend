@@ -1,4 +1,4 @@
-export enum CampainStatus {
+export enum CampaignStatus {
     WAITING = "En Espera",
     ACTIVE = "Activa",
     FINISHED = "Finalizada",
@@ -10,16 +10,16 @@ export interface Contact {
     lastName: string,
     phone: string,
     createdAt: Date,
-    status: CampainStatus
+    status: CampaignStatus
 }
 
-export interface Campaing {
+export interface Campaign {
     id: string,
     name: string,
     createdAt: Date,
     startDateTime: Date,
     recordCall: boolean,
-    status: CampainStatus,
+    status: CampaignStatus,
     contacts: Contact[]
 }
 

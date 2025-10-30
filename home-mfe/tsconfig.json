@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2020", "DOM"],
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
     "jsx": "react",
     "module": "esnext",
     "moduleResolution": "node",
@@ -11,15 +14,33 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["shared/components/*"],
-      "@/hooks/*": ["shared/hooks/*"],
-      "@/types/*": ["shared/types/*"],
-      "@/utils/*": ["shared/utils/*"],
-      "@/store/*": ["shared/store/*"],
-      "@/features/*": ["features/*"],
-      "@/app/*": ["app/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@/types": [
+        "shared/types"
+      ],
+      "@/components": [
+        "shared/components"
+      ],
+      "@/hooks": [
+        "shared/hooks"
+      ],
+      "@/utils": [
+        "shared/utils"
+      ],
+      "@/store": [
+        "shared/store"
+      ],
+      "@/features": [
+        "features"
+      ],
+      "@/app": [
+        "app"
+      ]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

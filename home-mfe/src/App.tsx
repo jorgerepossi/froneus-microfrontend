@@ -4,7 +4,7 @@ const App: React.FC = () => {
   return (
     <div style={{ padding: '20px' }}>
       <h1>🏠 Dashboard - Home MFE</h1>
-      <p>Este es el microfrontend de Home funcionando con Single-SPA!</p>
+      <p>Sistema de Gestión de Campañas</p>
     </div>
   );
 };

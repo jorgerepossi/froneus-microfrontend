@@ -34,3 +34,9 @@ export interface ContactFormData {
     lastName: string,
     phone: string,
 }
+
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: Record<string, string>;
+}

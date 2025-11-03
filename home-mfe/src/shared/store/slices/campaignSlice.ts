@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from 'zustand/middleware'
-import { Campaign, CampaignFormData, CampaignStatus } from '../../types'
+import { Campaign, CampaignFormData, CampaignStatus, Contact } from '../../types'
 import { v4 as uuidv4 } from 'uuid';
 import { mockCampaigns } from "../mock/campaignMockData";
 
@@ -14,6 +14,13 @@ interface CampaignStore {
     activateCampaign: (id: string) => void;
     finishCampaign: (id: string) => void;
     getCampaignById: (id: string) => Campaign | undefined
+
+
+    addContactToCampaign: (campaignId: string, contact: Omit<Contact, 'id' | 'createdAt' | 'status'>) => void;
+    removeContactFromCampaign: (campaignId: string, contactId: string) => void;
+    updateContact: (campaignId: string, contactId: string, contact: Partial<Omit<Contact, 'id' | 'createdAt' | 'status'>>) => void;
+
+
 }
 
 const useCampaignStore = create<CampaignStore>()(
@@ -43,7 +50,8 @@ const useCampaignStore = create<CampaignStore>()(
             initializeMockData: () => {
                 set({ campaigns: mockCampaigns });
             },
-            activateCampaign: (id) =>{
+
+            activateCampaign: (id) => {
                 set((state) => (
                     {
                         campaigns: state.campaigns.map(c => {
@@ -55,7 +63,7 @@ const useCampaignStore = create<CampaignStore>()(
                     }
                 ))
             },
-            finishCampaign: (id) =>{
+            finishCampaign: (id) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(c => {
                         if (c.id === id) {
@@ -68,6 +76,58 @@ const useCampaignStore = create<CampaignStore>()(
             getCampaignById: (id) => {
                 return get().campaigns.find(c => c.id === id);
             },
+
+            /** Campaign Detail */
+            addContactToCampaign: (campaignId, contactData) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map(campaign => {
+                        if (campaign.id === campaignId) {
+                            const newContact: Contact = {
+                                id: uuidv4(),
+                                ...contactData,
+                                createdAt: new Date(),
+                                status: campaign.status
+                            };
+                            return {
+                                ...campaign,
+                                contacts: [...campaign.contacts, newContact]
+                            };
+                        }
+                        return campaign;
+                    })
+                }));
+            },
+            removeContactFromCampaign: (campaignId, contactId) => { 
+                set((state) => ({
+                    campaigns: state.campaigns.map(campaign => {
+                        if(campaign.id === campaignId){
+                            return {
+                                ...campaign,
+                                contacts: campaign.contacts.filter(c => c.id !== contactId)
+                            };
+                        }
+                        return campaign
+                    })
+                }))
+            },
+            updateContact: (campaignId, contactId, contactData) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map(campaign => {
+                        if (campaign.id === campaignId) {
+                            return {
+                                ...campaign,
+                                contacts: campaign.contacts.map(contact => 
+                                    contact.id === contactId 
+                                        ? { ...contact, ...contactData }
+                                        : contact
+                                )
+                            };
+                        }
+                        return campaign;
+                    })
+                }))
+            }
+            /** End  Campaign Detail */
         }),
         {
             name: 'campaign-storage',

@@ -11,6 +11,7 @@
     "primereact": "^10.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.5",
     "single-spa": "^5.9.5",
     "single-spa-react": "^6.0.0",
     "uuid": "^13.0.0",

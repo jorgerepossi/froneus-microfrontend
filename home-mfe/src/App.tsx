@@ -5,6 +5,7 @@ import { Dashboard } from './features/dashboard';
 const App  = () => {
   
   return (
+    
     <Dashboard />
   );
 };

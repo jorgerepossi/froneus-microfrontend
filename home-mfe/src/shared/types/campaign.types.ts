@@ -9,7 +9,7 @@ export interface Contact {
     firstName: string,
     lastName: string,
     phone: string,
-    email: string,
+    email?: string,
     createdAt: Date,
     status: CampaignStatus,
 }
@@ -34,6 +34,7 @@ export interface ContactFormData {
     firstName: string,
     lastName: string,
     phone: string,
+    email?: string;
 }
 
 

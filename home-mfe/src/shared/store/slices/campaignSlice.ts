@@ -1,7 +1,9 @@
 import { create } from "zustand";
 import { persist } from 'zustand/middleware'
-import { Campaign, CampaignFormData, CampaignStatus, Contact } from '../../types'
 import { v4 as uuidv4 } from 'uuid';
+// @/Types
+import { Campaign, CampaignFormData, CampaignStatus, Contact } from '../../types'
+// @/MOck
 import { mockCampaigns } from "../mock/campaignMockData";
 
 
@@ -77,7 +79,6 @@ const useCampaignStore = create<CampaignStore>()(
                 return get().campaigns.find(c => c.id === id);
             },
 
-            /** Campaign Detail */
             addContactToCampaign: (campaignId, contactData) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(campaign => {
@@ -127,7 +128,6 @@ const useCampaignStore = create<CampaignStore>()(
                     })
                 }))
             }
-            /** End  Campaign Detail */
         }),
         {
             name: 'campaign-storage',

@@ -1,7 +1,5 @@
 import { Campaign, CampaignStatus } from "../types";
 
- 
- 
 export const formatCampaignDate = (date: Date): string => {
   return new Date(date).toLocaleDateString('es-AR', {
     year: 'numeric',

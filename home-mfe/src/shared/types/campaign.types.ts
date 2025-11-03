@@ -9,8 +9,9 @@ export interface Contact {
     firstName: string,
     lastName: string,
     phone: string,
+    email: string,
     createdAt: Date,
-    status: CampaignStatus
+    status: CampaignStatus,
 }
 
 export interface Campaign {

@@ -1,11 +1,11 @@
 import React from 'react';
+ 
+import { Dashboard } from './features/dashboard';
 
-const App: React.FC = () => {
+const App  = () => {
+  
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>🏠 Dashboard - Home MFE</h1>
-      <p>Sistema de Gestión de Campañas</p>
-    </div>
+    <Dashboard />
   );
 };
 

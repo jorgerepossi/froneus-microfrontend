@@ -1,48 +1,83 @@
+// src/features/dashboard/components/RecentTable.tsx
 import React from 'react';
-import { Campaign } from '../../../shared/types';
-
+import { useNavigate } from 'react-router-dom';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { Tag } from 'primereact/tag';
+import { Button } from 'primereact/button';
+import { Campaign } from '@/shared/types';
+import { getStatusLabel, getStatusSeverity, formatCampaignDate } from '@/shared/utils/campaignHelpers';
+ 
 
 interface RecentTableProps {
-    campaigns: Campaign[];
+  campaigns: Campaign[];
 }
 
-const RecentTable = ({ campaigns }: RecentTableProps) => {
+export const RecentTable: React.FC<RecentTableProps> = ({ campaigns }) => {
+  const navigate = useNavigate();
+
+  // Template para el estado
+  const statusBodyTemplate = (campaign: Campaign) => {
     return (
-        <section>
-            <h2>Campañas Recientes</h2>
-            <table border={1} style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Estado</th>
-                        <th>Inicio</th>
-                        <th>Contactos</th>
-                        <th>Grabar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {campaigns.length === 0 ? (
-                        <tr>
-                            <td colSpan={5} style={{ textAlign: 'center' }}>
-                                No hay campañas
-                            </td>
-                        </tr>
-                    ) : (
-                        campaigns.slice(0, 5).map(campaign => (
-                            <tr key={campaign.id}>
-                                <td>{campaign.name}</td>
-                                <td>{campaign.status}</td>
-                                <td>{new Date(campaign.startDateTime).toLocaleString('es-AR')}</td>
-                                <td>{campaign.contacts.length}</td>
-                                <td>{campaign.recordCall ? 'Sí' : 'No'}</td>
-                            </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
-        </section>
-    )
-}
-export {
-    RecentTable
-}
+      <Tag
+        value={getStatusLabel(campaign.status)}
+        severity={getStatusSeverity(campaign.status)}
+      />
+    );
+  };
+
+  // Template para la fecha
+  const dateBodyTemplate = (campaign: Campaign) => {
+    return formatCampaignDate(campaign.createdAt);
+  };
+
+  // Template para acciones
+  const actionBodyTemplate = (campaign: Campaign) => {
+    return (
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+        <Button
+          icon="pi pi-eye"
+          rounded
+          outlined
+          severity="info"
+          onClick={() => navigate(`/campaign/${campaign.id}`)}
+          tooltip="Ver detalle"
+          tooltipOptions={{ position: 'top' }}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <Card title="Campañas Recientes" style={{ marginTop: '20px' }}>
+      <DataTable
+        value={campaigns}
+        stripedRows
+        paginator
+        rows={10}
+        emptyMessage="No hay campañas disponibles"
+      >
+        <Column field="name" header="Nombre" sortable />
+        <Column
+          header="Estado"
+          body={statusBodyTemplate}
+          sortable
+          sortField="status"
+        />
+        <Column
+          header="Fecha de Creación"
+          body={dateBodyTemplate}
+          sortable
+          sortField="createdAt"
+        />
+        <Column field="contacts.length" header="Contactos" sortable />
+        <Column
+          header="Acciones"
+          body={actionBodyTemplate}
+          style={{ width: '120px', textAlign: 'center' }}
+        />
+      </DataTable>
+    </Card>
+  );
+};

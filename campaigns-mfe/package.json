@@ -1,9 +1,9 @@
 {
-  "name": "@campaign/home",
+  "name": "@campaign/campaigns-mfe",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack serve --port 8500",
-    "build": "webpack --mode=production"
+   "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "primeflex": "^4.0.0",

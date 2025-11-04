@@ -15,17 +15,16 @@
   <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/extras/named-exports.min.js"></script>
 
   <!-- Import Maps -->
-  <script type="systemjs-importmap">
-    {
-      "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/esm/single-spa.min.js",
-        "@campaign/root-config": "http://localhost:8080/campaign-root-config.js",
-        "@campaign/home": "http://localhost:8500/campaign-home.js",
-        "react": "https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js",
-        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"
+      <script type="systemjs-importmap">
+      {
+        "imports": {
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.5/lib/system/single-spa.min.js",
+          "@campaign/root-config": "http://localhost:9000/campaign-root-config.js",
+          "@campaign/home-mfe": "http://localhost:8500/campaign-home-mfe.js",
+          "@campaign/campaigns-mfe": "http://localhost:8501/campaign-campaigns-mfe.js"
+        }
       }
-    }
-  </script>
+    </script>
 
   <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@5.1.1/dist/import-map-overrides.js"></script>
 </head>

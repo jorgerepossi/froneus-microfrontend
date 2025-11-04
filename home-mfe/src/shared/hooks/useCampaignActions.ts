@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 // @/Store
-import { useCampaignStore } from "@/store"
+import { useCampaignStore } from "../store"
 // @/Types
 import { Campaign } from "@/types"
 import { useToast } from "../context/ToastContext"

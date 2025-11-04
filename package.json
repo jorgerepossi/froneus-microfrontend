@@ -5,7 +5,8 @@
   "scripts": {
     "start:root": "cd root-config && npm start",
     "start:home": "cd home-mfe && npm start",
-    "start:campaigns": "cd campaigns-mfe && npm start"
+    "start:campaigns": "cd campaigns-mfe && npm start",
+    "start:all": "concurrently \"npm:start:root\" \"npm:start:home\" \"npm:start:campaigns\""
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,8 @@
     "url": "https://github.com/jorgerepossi/froneus-microfrontend/issues"
   },
   "homepage": "https://github.com/jorgerepossi/froneus-microfrontend#readme",
-  "description": "Sistema de gestión de campañas con microfrontends"
+  "description": "Sistema de gestión de campañas con microfrontends",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }

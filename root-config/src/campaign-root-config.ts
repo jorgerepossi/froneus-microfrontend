@@ -1,9 +1,15 @@
 import { registerApplication, start } from "single-spa";
 
 registerApplication({
-  name: "@campaign/home",
-  app: () => System.import("@campaign/home") as any,
-  activeWhen: ["/"],
+  name: '@campaign/home-mfe',
+  app: () => System.import('@campaign/home-mfe') as any,
+  activeWhen: ['/']
+});
+
+registerApplication({
+  name: '@campaign/campaigns-mfe',
+  app: () => System.import('@campaign/campaigns-mfe') as any,
+  activeWhen: ['/campaigns']
 });
 
 // registerApplication({

@@ -2,7 +2,7 @@
 import React from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
+
 // @/Types
 import { Contact } from '@/shared/types';
  
@@ -13,19 +13,7 @@ interface ContactsTableProps {
 }
 
  const ContactsTable = ({ contacts }: ContactsTableProps) => {
-  const actionBodyTemplate = (contact: Contact) => {
-    return (
-      <Button
-        icon="pi pi-trash"
-        rounded
-        outlined
-        severity="danger"
-        onClick={() => onDelete(contact.id)}
-        tooltip="Eliminar contacto"
-        tooltipOptions={{ position: 'left' }}
-      />
-    );
-  };
+  
 
   return (
     <DataTable

@@ -12,6 +12,7 @@ const useCampaignDetail = () => {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate();
     const toast = useRef<Toast>(null);
+    
 
     const {
         getCampaignById,

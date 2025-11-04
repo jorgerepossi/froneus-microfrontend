@@ -6,6 +6,7 @@ import { ContactFormData } from '../types';
 import { useCampaignStore } from '../store';
 // @/Utils
 import { validateContactForm } from '../utils/validators';
+import { useToast } from '../context/ToastContext';
 
 const initFormValues: ContactFormData = {
     firstName: '',
@@ -17,8 +18,9 @@ const initFormValues: ContactFormData = {
 const useContactDialog = (campaignId: string) => {
     const [visible, setVisible] = useState(false);
     const [formData, setFormData] = useState<ContactFormData>(initFormValues);
+    const { showSuccess, showError } = useToast();
 
-    const toast = useRef<Toast>(null);
+ 
     const {
         addContactToCampaign
     } = useCampaignStore();
@@ -51,13 +53,7 @@ const useContactDialog = (campaignId: string) => {
         const validator = validateContactForm(formData);
         if(!validator.isValid){
             const firstError = Object.values(validator.errors)[0];
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Error en la validación',
-                detail: firstError,
-                life: 3000
-            
-            });
+             showError('Error en la validación', firstError);
             return 
         }
         addContactToCampaign(campaignId, {
@@ -67,18 +63,14 @@ const useContactDialog = (campaignId: string) => {
             email: formData.email
         })
 
-        toast.current?.show({
-            severity: "success",
-            summary: "Exitoso!",
-            detail: "Contacto agregado correctamente",
-            life: 3000
-        })
+        
+        showSuccess('Exitoso!', 'Contacto agregado correctamente');
 
         handleClose();
     }
 
     return {
-        toast,
+    
         visible,
         formData,
         handleOpen,

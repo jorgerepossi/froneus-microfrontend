@@ -10,7 +10,7 @@ interface ToastProviderProps {
     children: ReactNode;
 }
 
-const ToastProvider = ({ children }: ToastProviderProps) => {
+export const ToastProvider = ({ children }: ToastProviderProps) => {
     const toastRef = useRef<Toast>(null);
 
     const showToast = (severity: ToastSeverity, message: string, detail?: string) => {
@@ -29,13 +29,13 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
     }
 
     const showError = (message: string, detail?: string) => {
-        showToast('success', message, detail);
+        showToast('error', message, detail);
     }
     const showInfo = (message: string, detail?: string) => {
-        showToast('success', message, detail);
+        showToast('info', message, detail);
     }
     const showWarn = (message: string, detail?: string) => {
-        showToast('success', message, detail);
+        showToast('warn', message, detail);
     }
 
     return (
@@ -52,15 +52,13 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
 }
 
 
-export {
-    ToastProvider
-}
+ 
 
-const useToast = (): ToastContextType => {
+export const useToast = (): ToastContextType => {
     const context = useContext(ToastContext);
     if (!context) {
         throw new Error('useToast must be used within a ToastProvider');
     }
     return context;
 }
-export { useToast};
+ 

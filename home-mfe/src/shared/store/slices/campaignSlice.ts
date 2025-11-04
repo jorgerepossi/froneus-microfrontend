@@ -16,7 +16,8 @@ interface CampaignStore {
     activateCampaign: (id: string) => void;
     finishCampaign: (id: string) => void;
     getCampaignById: (id: string) => Campaign | undefined
-
+    pauseCampaign: (id: string) => void;
+    resumeCampaign: (id: string) => void; 
 
     addContactToCampaign: (campaignId: string, contact: Omit<Contact, 'id' | 'createdAt' | 'status'>) => void;
     removeContactFromCampaign: (campaignId: string, contactId: string) => void;
@@ -78,7 +79,29 @@ const useCampaignStore = create<CampaignStore>()(
             getCampaignById: (id) => {
                 return get().campaigns.find(c => c.id === id);
             },
-
+            
+            pauseCampaign: (id) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map(c => {
+                        if (c.id === id) {
+                            return { ...c, status: CampaignStatus.WAITING } 
+                        }
+                        return c
+                    })
+                }))
+            },
+          
+            resumeCampaign: (id) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map(c => {
+                        if (c.id === id) {
+                            return { ...c, status: CampaignStatus.ACTIVE }
+                        }
+                        return c
+                    })
+                }))
+            },
+             
             addContactToCampaign: (campaignId, contactData) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(campaign => {

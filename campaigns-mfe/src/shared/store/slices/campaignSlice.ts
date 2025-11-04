@@ -23,6 +23,9 @@ interface CampaignStore {
     updateContact: (campaignId: string, contactId: string, contact: Partial<Omit<Contact, 'id' | 'createdAt' | 'status'>>) => void;
 
 
+    createCampaign: (data: CampaignFormData) => void;
+    updateCampaign: (id: string, data: CampaignFormData) => void;
+
 }
 
 const useCampaignStore = create<CampaignStore>()(
@@ -98,10 +101,10 @@ const useCampaignStore = create<CampaignStore>()(
                     })
                 }));
             },
-            removeContactFromCampaign: (campaignId, contactId) => { 
+            removeContactFromCampaign: (campaignId, contactId) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(campaign => {
-                        if(campaign.id === campaignId){
+                        if (campaign.id === campaignId) {
                             return {
                                 ...campaign,
                                 contacts: campaign.contacts.filter(c => c.id !== contactId)
@@ -117,8 +120,8 @@ const useCampaignStore = create<CampaignStore>()(
                         if (campaign.id === campaignId) {
                             return {
                                 ...campaign,
-                                contacts: campaign.contacts.map(contact => 
-                                    contact.id === contactId 
+                                contacts: campaign.contacts.map(contact =>
+                                    contact.id === contactId
                                         ? { ...contact, ...contactData }
                                         : contact
                                 )
@@ -127,7 +130,36 @@ const useCampaignStore = create<CampaignStore>()(
                         return campaign;
                     })
                 }))
-            }
+            },
+            createCampaign: (data: CampaignFormData) => {
+                const newCampaign: Campaign = {
+                    id: uuidv4(),
+                    name: data.name,
+                    createdAt: new Date(),
+                    startDateTime: data.startDateTime,
+                    recordCall: data.recordCall,
+                    status: CampaignStatus.WAITING,
+                    contacts: []
+                };
+
+                set((state) => ({
+                    campaigns: [...state.campaigns, newCampaign]
+                }));
+            },
+            updateCampaign: (id: string, data: CampaignFormData) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map((campaign) =>
+                        campaign.id === id
+                            ? {
+                                ...campaign,
+                                name: data.name,
+                                startDateTime: data.startDateTime,
+                                recordCall: data.recordCall
+                            }
+                            : campaign
+                    )
+                }));
+            },
         }),
         {
             name: 'campaign-storage',

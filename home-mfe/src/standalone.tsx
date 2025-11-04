@@ -1,6 +1,6 @@
  
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
 import App from './App';
 import { ToastProvider } from './shared/context/ToastContext';
@@ -12,7 +12,7 @@ import 'primeicons/primeicons.css';
 
 const lifecycles = singleSpaReact({
   React,
-  ReactDOM,
+  ReactDOMClient, 
   rootComponent: () => (
     <ToastProvider>
       <App />

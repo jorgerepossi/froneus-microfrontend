@@ -1,30 +1,41 @@
-
 import React from 'react';
 import { Button } from 'primereact/button';
-import { Campaign } from '@/shared/types';
+import { Campaign, CampaignStatus } from '@/shared/types';
+
 
 
 interface CampaignActionsProps {
   campaign: Campaign;
-  canActivate: boolean;
+  canActivate: boolean; 
   canFinish: boolean;
   canDelete: boolean;
+  canPause: boolean;    
+  canResume: boolean;   
   onViewDetail: (id: string) => void;
   onActivate: (campaign: Campaign) => void;
+  onPause: (campaign: Campaign) => void;
+  onResume: (campaign: Campaign) => void;  
   onFinish: (campaign: Campaign) => void;
   onDelete: (campaign: Campaign) => void;
 }
 
-export const CampaignActions: React.FC<CampaignActionsProps> = ({
+export const CampaignActions  = ({
   campaign,
   canActivate,
   canFinish,
   canDelete,
+  canPause,
+  canResume,
   onViewDetail,
   onActivate,
+  onPause,
+  onResume,
   onFinish,
   onDelete
-}) => {
+} : CampaignActionsProps ) => {
+
+ 
+
   return (
     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
       <Button
@@ -36,7 +47,8 @@ export const CampaignActions: React.FC<CampaignActionsProps> = ({
         tooltip="Ver detalle"
         tooltipOptions={{ position: 'top' }}
       />
-
+      
+     
       {canActivate && (
         <Button
           icon="pi pi-play"
@@ -48,7 +60,31 @@ export const CampaignActions: React.FC<CampaignActionsProps> = ({
           tooltipOptions={{ position: 'top' }}
         />
       )}
+      
+      {canPause && (
+        <Button
+          icon="pi pi-pause"
+          rounded
+          outlined
+          severity="secondary"
+          onClick={() => onPause(campaign)} 
+          tooltip="Pausar campaña"
+          tooltipOptions={{ position: 'top' }}
+        />
+      )}
 
+      {campaign.status !==  CampaignStatus.WAITING ?  canResume && (
+        <Button
+          icon="pi pi-play"  
+          rounded
+          outlined
+          severity="success"
+          onClick={() => onResume(campaign)} 
+          tooltip="Reanudar campaña"
+          tooltipOptions={{ position: 'top' }}
+        />
+      ): ''}
+      
       {canFinish && (
         <Button
           icon="pi pi-stop"

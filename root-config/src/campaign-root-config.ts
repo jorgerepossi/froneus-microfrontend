@@ -3,7 +3,7 @@ import { registerApplication, start } from "single-spa";
 registerApplication({
   name: '@campaign/home-mfe',
   app: () => System.import('@campaign/home-mfe') as any,
-  activeWhen: ['/']
+  activeWhen: (location) => !location.pathname.startsWith('/campaigns')
 });
 
 registerApplication({

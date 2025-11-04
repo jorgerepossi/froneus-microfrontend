@@ -10,8 +10,7 @@ import { useContactDialog } from '@/shared/hooks/useContactDialog';
 import { useCampaignDetail } from '@/shared/hooks/useCampaignDetail';
 
 const CampaignDetail = () => {
-  const { campaign, handleBack  } = useCampaignDetail();
-  
+  const { campaign, handleBack  } = useCampaignDetail();  
   const contactDialog = useContactDialog(campaign?.id || '');
 
   if (!campaign) {

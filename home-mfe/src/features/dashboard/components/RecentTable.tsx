@@ -1,12 +1,12 @@
-// src/features/dashboard/components/RecentTable.tsx
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
 import { Campaign } from '@/shared/types';
-import { Button } from 'primereact/button';
+
 import { getStatusLabel, getStatusSeverity, formatCampaignDate } from '@/shared/utils/campaignHelpers';
 import { useCampaignActions } from '@/shared/hooks/useCampaignActions';
 import { CampaignActions } from './CampaignActions';
@@ -18,7 +18,7 @@ interface RecentTableProps {
 }
 
 export const RecentTable  = ({ campaigns }: RecentTableProps) => {
-  const navigate = useNavigate();
+
   const { deleteDialog, actions, validators } = useCampaignActions();
 
 

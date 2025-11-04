@@ -1,4 +1,4 @@
-// src/features/dashboard/components/CampaignActions.tsx
+
 import React from 'react';
 import { Button } from 'primereact/button';
 import { Campaign } from '@/shared/types';

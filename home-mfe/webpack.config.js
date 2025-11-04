@@ -4,8 +4,9 @@ const path = require('path');
 module.exports = {
   entry: './src/standalone.tsx',
   output: {
-    filename: 'campaign-home.js',
+    filename: 'campaign-home-mfe.js',
     path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'system',
     publicPath: '/',
   },
   mode: 'development',

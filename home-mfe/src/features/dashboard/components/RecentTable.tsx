@@ -1,23 +1,29 @@
-// src/features/dashboard/components/RecentTable.tsx
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
-import { Button } from 'primereact/button';
 import { Campaign } from '@/shared/types';
+
 import { getStatusLabel, getStatusSeverity, formatCampaignDate } from '@/shared/utils/campaignHelpers';
+import { useCampaignActions } from '@/shared/hooks/useCampaignActions';
+import { CampaignActions } from './CampaignActions';
+import { DeleteCampaignDialog } from './DeleteCampaignDialog';
  
 
 interface RecentTableProps {
   campaigns: Campaign[];
 }
 
-export const RecentTable: React.FC<RecentTableProps> = ({ campaigns }) => {
-  const navigate = useNavigate();
+export const RecentTable  = ({ campaigns }: RecentTableProps) => {
 
-  // Template para el estado
+  const { deleteDialog, actions, validators } = useCampaignActions();
+
+
+
+
   const statusBodyTemplate = (campaign: Campaign) => {
     return (
       <Tag
@@ -27,29 +33,29 @@ export const RecentTable: React.FC<RecentTableProps> = ({ campaigns }) => {
     );
   };
 
-  // Template para la fecha
+
   const dateBodyTemplate = (campaign: Campaign) => {
     return formatCampaignDate(campaign.createdAt);
   };
 
-  // Template para acciones
+  
   const actionBodyTemplate = (campaign: Campaign) => {
     return (
-      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-        <Button
-          icon="pi pi-eye"
-          rounded
-          outlined
-          severity="info"
-          onClick={() => navigate(`/campaign/${campaign.id}`)}
-          tooltip="Ver detalle"
-          tooltipOptions={{ position: 'top' }}
-        />
-      </div>
+      <CampaignActions 
+        campaign={campaign}
+        canActivate={validators.canActivate(campaign.status)}
+        canFinish={validators.canFinish(campaign.status)}
+        canDelete={validators.canDelete(campaign.status)}
+        onViewDetail={actions.handleVieDetail}
+        onActivate={actions.handleActivate}
+        onFinish={actions.handleFinish}
+        onDelete={actions.handleDeleteClick}
+       />
     );
   };
 
   return (
+    <>
     <Card title="Campañas Recientes" style={{ marginTop: '20px' }}>
       <DataTable
         value={campaigns}
@@ -79,5 +85,12 @@ export const RecentTable: React.FC<RecentTableProps> = ({ campaigns }) => {
         />
       </DataTable>
     </Card>
+    <DeleteCampaignDialog
+    visible={deleteDialog.visible}
+    campaign={deleteDialog.campaign}
+    onConfirm={deleteDialog.onConfirm}
+    onCancel={deleteDialog.onCancel}
+    />
+    </>
   );
 };

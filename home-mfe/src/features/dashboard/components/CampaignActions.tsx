@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button } from 'primereact/button';
 import { Campaign, CampaignStatus } from '@/shared/types';
-
-
+import { Menu } from 'primereact/menu';
+import { MenuItem } from 'primereact/menuitem';
 
 interface CampaignActionsProps {
   campaign: Campaign;
@@ -20,7 +20,7 @@ interface CampaignActionsProps {
   onDelete: (campaign: Campaign) => void;
 }
 
-export const CampaignActions  = ({
+export const CampaignActions = ({
   campaign,
   canActivate,
   canFinish,
@@ -34,91 +34,77 @@ export const CampaignActions  = ({
   onResume,
   onFinish,
   onDelete
-} : CampaignActionsProps ) => {
+}: CampaignActionsProps) => {
+  const menuRef = useRef<Menu>(null);
+
+ 
+  const menuItems: MenuItem[] = [
+    {
+      label: 'Ver detalle',
+      icon: 'pi pi-eye',
+      command: () => onViewDetail(campaign.id)
+    },
+    {
+      label: 'Gestionar contactos',
+      icon: 'pi pi-users',
+      command: () => onEdit(campaign.id)
+    }
+  ];
+
+
+  if (canActivate || canPause || canResume || canFinish || canDelete) {
+    menuItems.push({ separator: true });
+  }
+
+
+  if (canActivate) {
+    menuItems.push({
+      label: 'Activar',
+      icon: 'pi pi-play',
+      command: () => onActivate(campaign)
+    });
+  }
+
+  if (campaign.status ===  CampaignStatus.ACTIVE) {
+    menuItems.push({
+      label: 'Pausar',
+      icon: 'pi pi-pause',
+      command: () => onPause(campaign)
+    });
+  }
 
  
 
+  if (canFinish) {
+    menuItems.push({
+      label: 'Finalizar',
+      icon: 'pi pi-stop',
+      command: () => onFinish(campaign)
+    });
+  }
+
+  if (canDelete) {
+    menuItems.push({ separator: true });
+    menuItems.push({
+      label: 'Eliminar',
+      icon: 'pi pi-trash',
+      className: 'text-red-500',
+      command: () => onDelete(campaign)
+    });
+  }
+
   return (
-    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Menu model={menuItems} popup ref={menuRef} />
       <Button
-        icon="pi pi-eye"
-        rounded
-        outlined
-        severity="info"
-        onClick={() => onViewDetail(campaign.id)}
-        tooltip="Ver detalle"
-        tooltipOptions={{ position: 'top' }}
-      />
-      
-     
-      {canActivate && (
-        <Button
-          icon="pi pi-play"
-          rounded
-          outlined
-          severity="success"
-          onClick={() => onActivate(campaign)}
-          tooltip="Activar campaña"
-          tooltipOptions={{ position: 'top' }}
-        />
-      )}
-        <Button
-        icon="pi pi-pencil"
+        icon="pi pi-ellipsis-v"
         rounded
         outlined
         severity="secondary"
-        onClick={() => onEdit(campaign.id)}
-        tooltip="Editar campaña"
-        tooltipOptions={{ position: 'top' }}
+        onClick={(e) => menuRef.current?.toggle(e)}
+        tooltip="Acciones"
+        tooltipOptions={{ position: 'left' }}
       />
-      
-      {canPause && (
-        <Button
-          icon="pi pi-pause"
-          rounded
-          outlined
-          severity="secondary"
-          onClick={() => onPause(campaign)} 
-          tooltip="Pausar campaña"
-          tooltipOptions={{ position: 'top' }}
-        />
-      )}
-
-      {campaign.status !==  CampaignStatus.WAITING ?  canResume && (
-        <Button
-          icon="pi pi-play"  
-          rounded
-          outlined
-          severity="success"
-          onClick={() => onResume(campaign)} 
-          tooltip="Reanudar campaña"
-          tooltipOptions={{ position: 'top' }}
-        />
-      ): ''}
-      
-      {canFinish && (
-        <Button
-          icon="pi pi-stop"
-          rounded
-          outlined
-          severity="warning"
-          onClick={() => onFinish(campaign)}
-          tooltip="Finalizar campaña"
-          tooltipOptions={{ position: 'top' }}
-        />
-      )}
-
-      {canDelete && (
-        <Button
-          icon="pi pi-trash"
-          rounded
-          outlined
-          severity="danger"
-          onClick={() => onDelete(campaign)}
-          tooltip="Eliminar campaña"
-          tooltipOptions={{ position: 'top' }}
-        />
-      )}
     </div>
   );
 };

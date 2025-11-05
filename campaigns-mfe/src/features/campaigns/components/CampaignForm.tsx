@@ -16,17 +16,18 @@ export const CampaignForm = () => {
         { label: isEditMode ? 'Editar Campaña' : 'Nueva Campaña' }
     ];
 
-    const home = { 
-        icon: 'pi pi-home', 
-        url: '/' 
+    const home = {
+        icon: 'pi pi-home',
+        url: '/'
     };
 
     return (
         <div style={{ padding: '20px' }}>
-             <BreadCrumb model={items} home={home} />
+            <BreadCrumb model={items} home={home} />
             <Card title={isEditMode ? 'Editar Campaña' : 'Crear Nueva Campaña'}>
- 
-                <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
+
+                <div className='form__input-group'>
+                    <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
                     Nombre de la Campaña *
                 </label>
                 <InputText
@@ -42,9 +43,10 @@ export const CampaignForm = () => {
                         El nombre no puede modificarse en modo edición
                     </small>
                 )}
+                </div>
 
 
-                <div>
+               <div className='form__input-group'>
                     <label htmlFor="startDateTime" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
                         Fecha y Hora de Inicio *
                     </label>
@@ -58,6 +60,7 @@ export const CampaignForm = () => {
                         placeholder="Seleccione fecha y hora"
                         style={{ width: '100%' }}
                         disabled={isEditMode}
+                         
                     />
                     {isEditMode && (
                         <small style={{ color: '#6c757d', display: 'block', marginTop: '4px' }}>
@@ -98,7 +101,7 @@ export const CampaignForm = () => {
                 )}
 
 
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
+                <div className='form__buttons'>
                     <Button
                         label="Cancelar"
                         icon="pi pi-times"

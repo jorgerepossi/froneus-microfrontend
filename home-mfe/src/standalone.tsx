@@ -4,19 +4,20 @@ import * as ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
 import App from './App';
 import { ToastProvider } from './shared/context/ToastContext';
+import { PrimeReactProvider } from 'primereact/api'; 
 
- 
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+
 
 const lifecycles = singleSpaReact({
   React,
   ReactDOMClient, 
   rootComponent: () => (
+    <PrimeReactProvider>
+      
     <ToastProvider>
       <App />
     </ToastProvider>
+    </PrimeReactProvider>
   ),
   errorBoundary() {
     return <div>Error en Home MFE</div>;

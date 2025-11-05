@@ -6,16 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Root Config</title>
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
-  
+
+<meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' https: localhost:*; 
+             script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; 
+             connect-src https: localhost:* ws://localhost:*; 
+             style-src 'unsafe-inline' 'self' https: localhost:*;
+             object-src 'none';">
+             
   <!-- SystemJS -->
   <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/system.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/extras/amd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.2/dist/extras/named-exports.min.js"></script>
-
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+  <link rel="stylesheet" href="/global.css">
   <!-- Import Maps -->
-      <script type="systemjs-importmap">
+  <script type="systemjs-importmap">
       {
         "imports": {
           "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.5/lib/system/single-spa.min.js",
@@ -34,11 +40,11 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <main></main>
-  
+
   <script>
     System.import('@campaign/root-config');
   </script>
-  
+
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
 

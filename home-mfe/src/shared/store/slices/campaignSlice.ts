@@ -17,7 +17,7 @@ interface CampaignStore {
     finishCampaign: (id: string) => void;
     getCampaignById: (id: string) => Campaign | undefined
     pauseCampaign: (id: string) => void;
-    resumeCampaign: (id: string) => void; 
+    resumeCampaign: (id: string) => void;
 
     addContactToCampaign: (campaignId: string, contact: Omit<Contact, 'id' | 'createdAt' | 'status'>) => void;
     removeContactFromCampaign: (campaignId: string, contactId: string) => void;
@@ -59,7 +59,12 @@ const useCampaignStore = create<CampaignStore>()(
                     {
                         campaigns: state.campaigns.map(c => {
                             if (c.id === id) {
-                                return { ...c, status: CampaignStatus.ACTIVE }
+                                return {
+                                    ...c, status: CampaignStatus.ACTIVE,
+                                    contacts: c.contacts.map(contact => ({
+                                        ...contact, status: CampaignStatus.ACTIVE
+                                    }))
+                                }
                             }
                             return c
                         })
@@ -70,7 +75,13 @@ const useCampaignStore = create<CampaignStore>()(
                 set((state) => ({
                     campaigns: state.campaigns.map(c => {
                         if (c.id === id) {
-                            return { ...c, status: CampaignStatus.FINISHED }
+                            return {
+                                ...c, status: CampaignStatus.FINISHED,
+                                contacts: c.contacts.map(contact => ({
+                                    ...contact,
+                                    status: CampaignStatus.FINISHED
+                                }))
+                            }
                         }
                         return c
                     })
@@ -79,18 +90,24 @@ const useCampaignStore = create<CampaignStore>()(
             getCampaignById: (id) => {
                 return get().campaigns.find(c => c.id === id);
             },
-            
+
             pauseCampaign: (id) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(c => {
                         if (c.id === id) {
-                            return { ...c, status: CampaignStatus.WAITING } 
+                            return {
+                                ...c, status: CampaignStatus.WAITING,
+                                contacts: c.contacts.map(contact => ({
+                                    ...contact,
+                                    status: CampaignStatus.WAITING
+                                }))
+                            }
                         }
                         return c
                     })
                 }))
             },
-          
+
             resumeCampaign: (id) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(c => {
@@ -101,7 +118,7 @@ const useCampaignStore = create<CampaignStore>()(
                     })
                 }))
             },
-             
+
             addContactToCampaign: (campaignId, contactData) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(campaign => {
@@ -121,10 +138,10 @@ const useCampaignStore = create<CampaignStore>()(
                     })
                 }));
             },
-            removeContactFromCampaign: (campaignId, contactId) => { 
+            removeContactFromCampaign: (campaignId, contactId) => {
                 set((state) => ({
                     campaigns: state.campaigns.map(campaign => {
-                        if(campaign.id === campaignId){
+                        if (campaign.id === campaignId) {
                             return {
                                 ...campaign,
                                 contacts: campaign.contacts.filter(c => c.id !== contactId)
@@ -140,8 +157,8 @@ const useCampaignStore = create<CampaignStore>()(
                         if (campaign.id === campaignId) {
                             return {
                                 ...campaign,
-                                contacts: campaign.contacts.map(contact => 
-                                    contact.id === contactId 
+                                contacts: campaign.contacts.map(contact =>
+                                    contact.id === contactId
                                         ? { ...contact, ...contactData }
                                         : contact
                                 )

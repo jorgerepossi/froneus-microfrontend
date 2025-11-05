@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import './Layout.css';
+
 
 interface LayoutProps {
   children: ReactNode;

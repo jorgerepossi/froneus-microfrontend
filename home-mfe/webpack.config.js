@@ -7,7 +7,7 @@ module.exports = {
     filename: 'campaign-home-mfe.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'system',
-    publicPath: '/',
+   publicPath: 'http://localhost:8500/',
   },
   mode: 'development',
   devtool: 'source-map',

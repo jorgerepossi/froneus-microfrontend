@@ -9,7 +9,7 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 const Dashboard = () => {
 
     const { campaigns, initializeMockData } = useCampaignStore();
-    console.log(campaigns);
+
     const stats = useDashboardStats();
 
     const items = [
@@ -29,7 +29,7 @@ const Dashboard = () => {
    
 
     return (
-        <div style={{ padding: '20px' }}>
+        <div  className='dashboard'>
            <BreadCrumb model={items} home={home} />
              
             <StatsGrid {...stats} />

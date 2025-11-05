@@ -1,8 +1,8 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import { StatsGridProps } from "../types"
 import { Card } from "primereact/card"
-
-
+import { Chart } from 'primereact/chart';
+import { useStatsMetrics } from "@/shared/hooks/useStatsMetrics";
 
 const StatsGrid = ({
     totalCampaigns,
@@ -15,32 +15,55 @@ const StatsGrid = ({
     finishedContacts
 
 }: StatsGridProps) => {
+    
+    const { 
+        campaignStatusChartData, 
+        campaignStatusChartOptions, 
+        contactStatusChartData, 
+        contactStatusChartOptions, 
+        generalChartData, 
+        generalChartOptions
+    } = useStatsMetrics({
+        totalCampaigns,
+        totalContacts,
+        waitingCampaigns,
+        activeCampaigns,
+        finishedCampaigns,
+        waitingContacts,
+        activeContacts,
+        finishedContacts
+    });
+
     return (
         <div className='dashboard_wrapper--stats'>
+  
             <Card className="box" title="Generales">
-                 
-                <div>
-                    <p> Total de campañas {totalCampaigns}</p>
-                    <p>Total de Contactos: <strong>{totalContacts}</strong></p>
-                </div>
+                  <Chart 
+                  type="doughnut" 
+                  data={generalChartData} 
+                  options={generalChartOptions} 
+                  className="w-full md:w-30rem" 
+                  />
             </Card>
 
+ 
             <Card className="box" title="Campañas por Estado">
-                
-                <div>
-                    <p>En Espera: <strong>{waitingCampaigns}</strong></p>
-                    <p>Activas: <strong>{activeCampaigns}</strong></p>
-                    <p>Finalizadas: <strong>{finishedCampaigns}</strong></p>
-                </div>
+                <Chart 
+                  type="doughnut" 
+                  data={campaignStatusChartData} 
+                  options={campaignStatusChartOptions} 
+                  className="w-full md:w-30rem" 
+                />
             </Card>
 
+         
             <Card className="box" title="Contactos por Estado de Campaña">
-                 
-                <div>
-                    <p>En Espera: <strong>{waitingContacts}</strong> contactos</p>
-                    <p>Activas: <strong>{activeContacts}</strong> contactos</p>
-                    <p>Finalizadas: <strong>{finishedContacts}</strong> contactos</p>
-                </div>
+                 <Chart 
+                  type="doughnut" 
+                  data={contactStatusChartData} 
+                  options={contactStatusChartOptions} 
+                  className="w-full md:w-30rem" 
+                />
             </Card>
         </div>
     )
@@ -49,5 +72,3 @@ const StatsGrid = ({
 export {
     StatsGrid
 }
-
-

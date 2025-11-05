@@ -13,6 +13,7 @@ interface CampaignActionsProps {
   canResume: boolean;   
   onViewDetail: (id: string) => void;
   onActivate: (campaign: Campaign) => void;
+  onEdit: (id: string) => void; 
   onPause: (campaign: Campaign) => void;
   onResume: (campaign: Campaign) => void;  
   onFinish: (campaign: Campaign) => void;
@@ -28,6 +29,7 @@ export const CampaignActions  = ({
   canResume,
   onViewDetail,
   onActivate,
+  onEdit,
   onPause,
   onResume,
   onFinish,
@@ -60,6 +62,15 @@ export const CampaignActions  = ({
           tooltipOptions={{ position: 'top' }}
         />
       )}
+        <Button
+        icon="pi pi-pencil"
+        rounded
+        outlined
+        severity="secondary"
+        onClick={() => onEdit(campaign.id)}
+        tooltip="Editar campaña"
+        tooltipOptions={{ position: 'top' }}
+      />
       
       {canPause && (
         <Button

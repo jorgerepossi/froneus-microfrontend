@@ -43,7 +43,8 @@ const Layout =({ children }: LayoutProps) => {
         </div>
       </header>
 
-      <nav className="app-nav">
+      <div className="wrapper">
+        <nav className="app-nav">
         <button 
           className={currentPath === '/' ? 'nav-link active' : 'nav-link'}
           onClick={() => handleNavigation('/')}
@@ -63,6 +64,7 @@ const Layout =({ children }: LayoutProps) => {
       <main className="app-content">
         {children}
       </main>
+      </div>
 
       <footer className="app-footer">
         <p>Froneus Challenge 2025 - Arquitectura de Microfrontends con Single-SPA</p>

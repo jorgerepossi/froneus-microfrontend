@@ -3,7 +3,7 @@ import { useCampaignStore } from "../../../shared/store"
 import { useDashboardStats } from '../hooks/useDashboardStats';
 import { StatsGrid } from './StatsGrid';
 import { RecentTable } from './RecentTable';
-import { Button } from 'primereact/button';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 
 const Dashboard = () => {
@@ -12,25 +12,26 @@ const Dashboard = () => {
     console.log(campaigns);
     const stats = useDashboardStats();
 
+    const items = [
+        { label: 'Dashboard' }
+    ];
+
+    const home = { 
+        icon: 'pi pi-home', 
+        url: '/' 
+    };
+
     useEffect(() => {
         if (campaigns.length === 0) {
             initializeMockData();
         }
     }, []);
-   const handleCreateCampaign = () => {
-    window.history.pushState({}, '', '/campaigns');
-    window.dispatchEvent(new PopStateEvent('popstate'));
-};
+   
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Dashboard</h1>
-             <Button
-                    label="Crear Nueva Campaña"
-                    icon="pi pi-plus"
-                    onClick={handleCreateCampaign}
-                    severity="success"
-                />
+           <BreadCrumb model={items} home={home} />
+             
             <StatsGrid {...stats} />
             <RecentTable  campaigns={campaigns} />
         </div>

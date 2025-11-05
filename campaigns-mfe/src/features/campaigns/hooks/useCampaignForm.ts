@@ -28,7 +28,7 @@ export const useCampaignForm = () => {
             if (campaign) {
                 setFormData({
                     name: campaign.name,
-                    startDateTime: campaign.startDateTime,
+                   startDateTime: new Date(campaign.startDateTime),
                     recordCall: campaign.recordCall
                 });
                 setIsEditMode(true);

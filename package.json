@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "install:all": "cd root-config && npm install && cd ../home-mfe && npm install && cd ../campaigns-mfe && npm install",
     "start:root": "cd root-config && npm start",
     "start:home": "cd home-mfe && npm start",
     "start:campaigns": "cd campaigns-mfe && npm start",

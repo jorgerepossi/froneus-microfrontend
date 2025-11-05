@@ -188,7 +188,7 @@ const canEditCampaignData = (status: CampaignStatus): boolean => {
  * @returns {boolean} - true if contacts can be added.
  */
 const canAddContacts = (status: CampaignStatus): boolean => {
-    return true; // Se pueden agregar contactos en cualquier estado
+    return true; 
 };
 
 /**

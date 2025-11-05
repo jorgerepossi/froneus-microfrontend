@@ -45,6 +45,7 @@ export const RecentTable  = ({ campaigns }: RecentTableProps) => {
         canDelete={validators.canDelete(campaign.status)}
         canPause={validators.canPause(campaign.status)}
         canResume={validators.canResume(campaign.status)}
+        onEdit={actions.handleEdit}
         onPause={actions.handlePauseCampaign}
         onResume={actions.handleResumeCampaign}
         onViewDetail={actions.handleVieDetail}

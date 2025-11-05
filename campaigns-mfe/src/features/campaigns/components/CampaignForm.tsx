@@ -5,12 +5,25 @@ import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { useCampaignForm } from '../hooks/useCampaignForm';
 import { Calendar } from 'primereact/calendar';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 export const CampaignForm = () => {
     const { formData, isEditMode, handleChange, handleSubmit, handleCancel } = useCampaignForm();
 
+    const items = [
+        { label: 'Dashboard', url: '/' },
+        { label: 'Campañas', url: '/campaigns' },
+        { label: isEditMode ? 'Editar Campaña' : 'Nueva Campaña' }
+    ];
+
+    const home = { 
+        icon: 'pi pi-home', 
+        url: '/' 
+    };
+
     return (
-        <div>
+        <div style={{ padding: '20px' }}>
+             <BreadCrumb model={items} home={home} />
             <Card title={isEditMode ? 'Editar Campaña' : 'Crear Nueva Campaña'}>
  
                 <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>

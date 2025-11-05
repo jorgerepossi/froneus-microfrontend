@@ -86,6 +86,10 @@ export const useCampaignActions = () => {
         }
     }
 
+    const handleEdit = (campaignId: string) => {
+   navigate(`/campaign/${campaignId}`);
+};
+
     const {
         activateCampaign,
         finishCampaign,
@@ -97,9 +101,10 @@ export const useCampaignActions = () => {
 
     return {
         actions: {
-            handleVieDetail,
-            handleActivate,
+            handleEdit,
             handleFinish,
+            handleActivate,
+            handleVieDetail,
             handleDeleteClick,
             handlePauseCampaign,
             handleResumeCampaign

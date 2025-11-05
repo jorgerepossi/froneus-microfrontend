@@ -21,9 +21,6 @@ export const RecentTable  = ({ campaigns }: RecentTableProps) => {
 
   const { deleteDialog, actions, validators } = useCampaignActions();
 
-
-
-
   const statusBodyTemplate = (campaign: Campaign) => {
     return (
       <Tag
@@ -41,11 +38,15 @@ export const RecentTable  = ({ campaigns }: RecentTableProps) => {
   
   const actionBodyTemplate = (campaign: Campaign) => {
     return (
-      <CampaignActions 
+     <CampaignActions 
         campaign={campaign}
         canActivate={validators.canActivate(campaign.status)}
         canFinish={validators.canFinish(campaign.status)}
         canDelete={validators.canDelete(campaign.status)}
+        canPause={validators.canPause(campaign.status)}
+        canResume={validators.canResume(campaign.status)}
+        onPause={actions.handlePauseCampaign}
+        onResume={actions.handleResumeCampaign}
         onViewDetail={actions.handleVieDetail}
         onActivate={actions.handleActivate}
         onFinish={actions.handleFinish}

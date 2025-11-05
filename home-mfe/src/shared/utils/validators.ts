@@ -89,39 +89,39 @@ const validateContactForm = (data: Partial<ContactFormData>): ValidationResult =
  *   recordCall: true 
  * };
  */
-const validateCampaignForm = (data: Partial<CampaignFormData>): ValidationResult => {
-    const errors: Record<string, string> = {};
+    const validateCampaignForm = (data: Partial<CampaignFormData>): ValidationResult => {
+        const errors: Record<string, string> = {};
 
-    if (!data.name || data.name.trim() === '') {
-        errors.name = 'El nombre de la campaña es obligatorio';
-    } else if (data.name.length < 3) {
-        errors.name = 'El nombre de la campaña debe tener al menos 3 caracteres';
-    } else if (data.name.length > 100) {
-        errors.name = 'El nombre no puede exceder 100 caracteres';
-    }
-
-    if (!data.startDateTime) {
-        errors.startDateTime = "La fecha y hora de inicio es obligatoria";
-    } else {
-        const startDate = new Date(data.startDateTime);
-        const now = new Date();
-
-        if (isNaN(startDate.getTime())) {
-            errors.startDateTime = 'Fecha y hora inválida';
-        } else if (startDate < now) {
-            errors.startDateTime = 'La fecha y hora debe ser futura';
+        if (!data.name || data.name.trim() === '') {
+            errors.name = 'El nombre de la campaña es obligatorio';
+        } else if (data.name.length < 3) {
+            errors.name = 'El nombre de la campaña debe tener al menos 3 caracteres';
+        } else if (data.name.length > 100) {
+            errors.name = 'El nombre no puede exceder 100 caracteres';
         }
-    }
 
-    if (data.recordCall === undefined || data.recordCall === null) {
-        errors.recordCall = 'Debe indicar si se grabarán las llamadas';
-    }
+        if (!data.startDateTime) {
+            errors.startDateTime = "La fecha y hora de inicio es obligatoria";
+        } else {
+            const startDate = new Date(data.startDateTime);
+            const now = new Date();
 
-    return {
-        isValid: Object.keys(errors).length === 0,
-        errors
+            if (isNaN(startDate.getTime())) {
+                errors.startDateTime = 'Fecha y hora inválida';
+            } else if (startDate < now) {
+                errors.startDateTime = 'La fecha y hora debe ser futura';
+            }
+        }
+
+        if (data.recordCall === undefined || data.recordCall === null) {
+            errors.recordCall = 'Debe indicar si se grabarán las llamadas';
+        }
+
+        return {
+            isValid: Object.keys(errors).length === 0,
+            errors
+        };
     };
-};
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -132,9 +132,9 @@ const validateCampaignForm = (data: Partial<CampaignFormData>): ValidationResult
  * @returns {boolean} - true if the campaign is eligible for deletion.
  */
 
-const canDeleteCampaign = (status: CampaignStatus): boolean => {
-    return status === CampaignStatus.WAITING;
-};
+    const canDeleteCampaign = (status: CampaignStatus): boolean => {
+        return status === CampaignStatus.WAITING;
+    };
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -145,9 +145,9 @@ const canDeleteCampaign = (status: CampaignStatus): boolean => {
  * @returns {boolean} - true if the campaign is eligible for activation.
  */
 
-const canActivateCampaign = (status: CampaignStatus): boolean => {
-    return status === CampaignStatus.WAITING;
-};
+    const canActivateCampaign = (status: CampaignStatus): boolean => {
+        return status === CampaignStatus.WAITING;
+    };
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -159,9 +159,9 @@ const canActivateCampaign = (status: CampaignStatus): boolean => {
  * @returns {boolean} - true if the campaign is eligible for finalization.
  */
 
-const canFinishCampaign = (status: CampaignStatus): boolean => {
-    return status === CampaignStatus.ACTIVE;
-};
+    const canFinishCampaign = (status: CampaignStatus): boolean => {
+        return status === CampaignStatus.ACTIVE;
+    };
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -173,9 +173,34 @@ const canFinishCampaign = (status: CampaignStatus): boolean => {
  * @returns {boolean} - true if basic data can be edited.
  */
 
-const canEditCampaignData = (status: CampaignStatus): boolean => {
-    return status === CampaignStatus.WAITING;
-};
+    const canEditCampaignData = (status: CampaignStatus): boolean => {
+        return status === CampaignStatus.WAITING;
+    };
+
+/**
+ * Froneus Challenge Notation to Jorge Repossi
+ * 
+ * Validates whether a campaign can be activated.
+ * It can only be activated if its status is WAITING.
+ * * @param {CampaignStatus} status - The current status of the campaign.
+ * @returns {boolean} - true if the campaign is eligible for activation.
+ */
+
+    const canPauseCampaign = (status: CampaignStatus): boolean => { 
+        return status === CampaignStatus.ACTIVE; 
+    };
+
+/**
+ * Froneus Challenge Notation to Jorge Repossi
+ * * Validates whether a campaign can be resumed.
+ * It can only be resumed if its status is PAUSED.
+ * * @param {CampaignStatus} status - The current status of the campaign.
+ * @returns {boolean} - true if the campaign is eligible for resuming.
+ */
+
+    const canResumeCampaign = (status: CampaignStatus): boolean => {
+        return status === CampaignStatus.WAITING as CampaignStatus; 
+    };
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -187,9 +212,9 @@ const canEditCampaignData = (status: CampaignStatus): boolean => {
  * @param {CampaignStatus} status - The current status of the campaign.
  * @returns {boolean} - true if contacts can be added.
  */
-const canAddContacts = (status: CampaignStatus): boolean => {
-    return true; // Se pueden agregar contactos en cualquier estado
-};
+    const canAddContacts = (status: CampaignStatus): boolean => {
+        return true; 
+    };
 
 /**
  * Froneus Challenge Notation to Jorge Repossi
@@ -220,5 +245,7 @@ export {
     canFinishCampaign,
     canEditCampaignData,
     canAddContacts,
+    canPauseCampaign,
+    canResumeCampaign,
     isContactDataComplete
 };

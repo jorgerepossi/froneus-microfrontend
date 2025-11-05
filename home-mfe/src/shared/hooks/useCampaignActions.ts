@@ -5,7 +5,14 @@ import { useCampaignStore } from "../store"
 // @/Types
 import { Campaign } from "@/types"
 import { useToast } from "../context/ToastContext"
-import { canActivateCampaign, canDeleteCampaign, canFinishCampaign } from "../utils/validators"
+import { 
+    canActivateCampaign, 
+    canDeleteCampaign, 
+    canFinishCampaign,
+
+    canPauseCampaign,
+    canResumeCampaign
+} from "../utils/validators"
 
 
 export const useCampaignActions = () => {
@@ -18,7 +25,7 @@ export const useCampaignActions = () => {
 
 
     const handleVieDetail = (campaignId: string) => {
-        navigate(`/campaigns/${campaignId}`);
+        navigate(`/campaign/${campaignId}`);
     }
 
     const handleActivate = (campaign: Campaign) => {
@@ -30,6 +37,24 @@ export const useCampaignActions = () => {
         showSuccess("Campaña activada", "La campaña se ha activado correctamente")
     }
 
+    const handlePauseCampaign = (campaign: Campaign) => {
+        if (!canPauseCampaign(campaign.status)) {
+            showError("Acción no permitida", "La campaña no se puede pausar en su estado actual.")
+            return;
+        }
+        pauseCampaign(campaign.id);
+        showSuccess("Campaña pausada", "La campaña se ha pausado correctamente.");
+    }
+
+    const handleResumeCampaign = (campaign: Campaign) => {
+        if (!canResumeCampaign(campaign.status)) {
+            showError("Acción no permitida", "La campaña no se puede reanudar en su estado actual.")
+            return;
+        }
+        resumeCampaign(campaign.id);
+        showSuccess("Campaña reanudada", "La campaña se ha reanudado y está activa.");
+    }
+   
     const handleFinish = (campaign: Campaign) => {
         if (!canFinishCampaign(campaign.status)) {
             showError("Acción no permitida", "La campaña porque no cumple con los requisitos ")
@@ -64,8 +89,10 @@ export const useCampaignActions = () => {
     const {
         activateCampaign,
         finishCampaign,
-        deleteCampaign
-
+        deleteCampaign,
+ 
+        pauseCampaign,
+        resumeCampaign
     } = useCampaignStore()
 
     return {
@@ -73,7 +100,9 @@ export const useCampaignActions = () => {
             handleVieDetail,
             handleActivate,
             handleFinish,
-            handleDeleteClick
+            handleDeleteClick,
+            handlePauseCampaign,
+            handleResumeCampaign
         },
         deleteDialog: {
             visible: deleteDialogVisible,
@@ -84,8 +113,9 @@ export const useCampaignActions = () => {
         validators: {
             canActivate: canActivateCampaign,
             canFinish: canFinishCampaign,
-            canDelete: canDeleteCampaign
+            canDelete: canDeleteCampaign,
+            canPause: canPauseCampaign,
+            canResume: canResumeCampaign
         }
-
     }
 }

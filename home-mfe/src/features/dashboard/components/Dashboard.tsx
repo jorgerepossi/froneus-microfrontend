@@ -28,8 +28,6 @@ const Dashboard = () => {
     }, []);
    
 
-    console.log(stats)
-
     return (
         <div  className='dashboard'>
            <BreadCrumb model={items} home={home} />
